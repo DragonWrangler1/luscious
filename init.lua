@@ -1,10 +1,10 @@
-vlf_luscious = {}
+rs_luscious = {}
 
 local mgp = minetest.get_mapgen_params()
 local chunksize = 16 * mgp.chunksize
 
 -- Function to blend biomes, specifically with _c biomes' properties
-function vlf_luscious.blend_biome_color(pos)
+function rs_luscious.blend_biome_color(pos)
     local blend_distance = 5
     local heat_total, humidity_total, count = 0, 0, 0
     local is_c_biome = false
@@ -44,18 +44,18 @@ function vlf_luscious.blend_biome_color(pos)
     return heat + (humidity * 16)
 end
 
-function vlf_luscious.on_construct(pos)
+function rs_luscious.on_construct(pos)
     local node = minetest.get_node(pos)
-    node.param2 = vlf_luscious.blend_biome_color(pos)
+    node.param2 = rs_luscious.blend_biome_color(pos)
     minetest.swap_node(pos, node)
 end
 
-core.register_mapgen_script(minetest.get_modpath("vlf_luscious").."/mg.lua")
+core.register_mapgen_script(minetest.get_modpath("rs_luscious").."/mg.lua")
 
 minetest.override_item("default:dirt_with_grass", {
 	paramtype2 = "color",
 	palette = "luscious_grass_palette.png",
 	on_construct = function(pos, node)
-		vlf_luscious.on_construct(pos)
+		rs_luscious.on_construct(pos)
 	end,
 })
